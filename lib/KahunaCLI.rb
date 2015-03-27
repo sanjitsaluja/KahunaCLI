@@ -4,6 +4,7 @@ require 'kahuna_client'
 require 'KahunaCLI/version'
 require 'KahunaCLI/configuration'
 require 'KahunaCLI/kahuna'
+require 'KahunaCLI/log_formatter'
 
 module KahunaCLI
   extend Configuration
