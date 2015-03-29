@@ -13,9 +13,8 @@ module KahunaCLI
       print_log_component('timestamp', :green)
       print_log_component('action', :green)
       print_log_component('message')
+      print_log_component('dev_id')
       print_log_component('push_token')
-      
-      # Push Token
     end
 
     def print_log_component(key, text_color = nil, background_color = nil)

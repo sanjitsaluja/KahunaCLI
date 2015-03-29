@@ -14,13 +14,8 @@ module KahunaCLI
       :default => false,
       :desc => "Dump logs in JSON format"      
 
-    method_option :human_readable, 
-      :aliases => "-h",      
-      :default => true,
-      :desc => "Format in to be human readable"
-
     method_option :poll_time,
-      :default => 1,
+      :default => 5,
       :type => :numeric,
       :desc => "Poll time in seconds"
 
@@ -35,7 +30,7 @@ module KahunaCLI
           display_logs(push_logs, options)
         end
         begin
-          sleep 1 
+          sleep options[:poll_time]
         rescue Interrupt
           break
         end
@@ -46,7 +41,7 @@ module KahunaCLI
 
     def fetch_first_cursor
       begin
-        logs = KahunaCLI.kahuna_client.logs(timestamp:Time.now, number_of_records:1)
+        logs = KahunaCLI.kahuna_client.logs(timestamp:Time.now, number_of_records:100)
         logs.cursor
       rescue Interrupt
       end
@@ -54,12 +49,13 @@ module KahunaCLI
 
     def fetch_logs_with_cursor(cursor)
       begin
-        KahunaCLI.kahuna_client.logs({cursor:cursor, number_of_records:1000})
+        KahunaCLI.kahuna_client.logs({cursor:cursor, number_of_records:100})
       rescue Interrupt
       end
     end
 
     def display_logs(push_logs, options)
+      puts push_logs.count
       push_logs.each do |log|
         puts "\n"
         if options[:json]

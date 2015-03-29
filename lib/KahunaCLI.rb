@@ -6,6 +6,8 @@ require 'KahunaCLI/configuration'
 require 'KahunaCLI/kahuna'
 require 'KahunaCLI/log_formatter'
 
+String.disable_colorization = false
+
 module KahunaCLI
   extend Configuration
   
